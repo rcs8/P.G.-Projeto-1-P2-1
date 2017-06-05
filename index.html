@@ -1,0 +1,39 @@
+<HTML>
+  <HEAD>
+    <TITLE>Visualição Interativa PG</TITLE>
+     <SCRIPT SRC="bonsai.min.js"></SCRIPT>
+    <LINK REL="stylesheet" HREF="styles.css">
+    <META CHARSET="UTF-8">
+  </HEAD>
+  <BODY>
+    <DIV ID="header">
+        <DIV ID="federal" CLASS="header_content bottom">
+            <P> Rodrigo Cunha da Silva (rcs8) </P>
+            <P> Luiz Henrique Souza Gomes de Oliveira (lhsgo) </P>
+        </DIV>
+        <DIV ID="project" CLASS="header-content">
+            <P CLASS="text-project-name"> Visualicação Interativa P2-1 </P>
+        </DIV>
+        <DIV ID="course" CLASS="header-content bottom">
+            <P> Universidade Federal de Pernambuco (UFPE) <P>
+            <P>Processamento Gráfico</P>
+            <P>Prof. Sílvio Melo</P>
+        </DIV>
+    </DIV>
+    <DIV ID="stage">
+      <DIV ID="inner-stage">
+        <SCRIPT>
+          var b = document.getElementById("inner-stage"),
+              x = b.offsetWidth,
+              y = b.offsetHeight - 150;
+          var options = {
+            url: 'stage.js',
+            width: x / 2,
+            height: y / 2
+          }
+          bonsai.run(document.getElementById('inner-stage'), options);
+        </SCRIPT>
+      </DIV>
+    </DIV>
+  </BODY>
+</HTML>
