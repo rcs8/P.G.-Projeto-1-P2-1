@@ -1,11 +1,14 @@
-const POINT_COLOR = 'black';
-const POINT_RADIUS = 8;
-const PATH_COLOR = 'red';
+const POINT_COLOR = 'red';
+const POINT_RADIUS = 5;
+const PATH_COLOR = 'blue';
 const PATH_STROKE = 2;
-const BEZIER_COLOR = 'blue';
+const BEZIER_COLOR = 'black';
 const BEZIER_STROKE = 2;
 
 const EVALUATIONS = 500;
+
+var sx = stage.options.width / 2 - 10,
+    sy = stage.options.height / 2 - 10;
 
 // Inicia a caminho de controle
 var path = new Path().stroke(PATH_COLOR, PATH_STROKE).addTo(stage);
@@ -13,11 +16,19 @@ var path = new Path().stroke(PATH_COLOR, PATH_STROKE).addTo(stage);
 // Inicia o caminho da curva de bézier
 var bézier = new Path().stroke(BEZIER_COLOR, BEZIER_STROKE).addTo(stage);
 
+var split = new Path().stroke('black', 5).addTo(stage);
+
+split.moveTo(0, sy);
+split.lineTo(stage.options.width, sy);
+split.lineTo(sx, sy);
+split.lineTo(sx, 0);
+split.lineTo(sx, stage.options.height);
+
 // Mapeamento de ID de pontos para ID de vétice do caminho de controle.
 // Remoções de pontos irão dessincronizar o mapeamento
 // ID do objeto círculo -> index de segmento no caminho de controle
-var idMap = [ -1, -1, -1 ]; // Popula casas ignoradas
-var diff = 3; // Diferença inicial de 3 (stage, caminho de contorle e curva)
+var idMap = [ -1, -1, -1, -1 ]; // Popula casas ignoradas
+var diff = 4; // Diferença inicial de 3 (stage, caminho de contorle e curva)
 
 stage.on('click', function(clickEvent) {
   target = clickEvent.target;
@@ -27,20 +38,20 @@ stage.on('click', function(clickEvent) {
   // id 1 = caminho de controle
   // id 2 = curva de bézier
   // id 3+ = pontos de controle
-  if('id' in target && target.id <= 2) {
-    x = clickEvent.x;
-    y = clickEvent.y;
+  if('id' in target && target.id <= 3) {
+    x = Math.min(clickEvent.x, sx);
+    y = Math.min(clickEvent.y, sy);
 
     // Ponto de controle
     point = new Circle(x, y, POINT_RADIUS).fill(POINT_COLOR).addTo(stage);
-
+  
     // Mapeia o objeto
     idMap.push(point.id - diff);
 
     // Inicializa a função de arrasto do ponto
     point.on('drag', function(dragEvent) {
       // Move o ponto de controle
-      this.attr({"x": dragEvent.x, "y": dragEvent.y});
+      this.attr({"x": Math.min(dragEvent.x, sx), "y": Math.min(dragEvent.y, sy)});
 
       pointID = this.id;
 
@@ -138,14 +149,14 @@ function drawBezierCurve() {
         points[c][2] = (1 - t) * points[c][2] + t * points[c + 1][2];
       }
     }
-
-      // A interpolação fica armazenada no primeiro index do array
+    // A interpolação fica armazenada no primeiro index do array
     x = points[0][1];
     y = points[0][2];
     
+
+    // Independente do algoritmo, insere a vértice na curva de bézier
     bézier.lineTo(x, y);
   }
-
   // Ponto final
   bézier.lineTo(points[n][1], points[n][2]);
 }
