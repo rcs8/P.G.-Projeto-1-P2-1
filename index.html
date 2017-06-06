@@ -6,35 +6,39 @@
     <META CHARSET="UTF-8">
   </HEAD>
   <BODY>
-    <DIV ID="header">
-        <DIV ID="federal" CLASS="header_content bottom">
-            <P> Rodrigo Cunha da Silva (rcs8) </P>
-            <P> Luiz Henrique Souza Gomes de Oliveira (lhsgo) </P>
-        </DIV>
-        <DIV ID="project" CLASS="header-content">
-            <P CLASS="text-project-name"> Visualicação Interativa P2-1 </P>
-        </DIV>
-        <DIV ID="course" CLASS="header-content bottom">
+    <DIV ID="wrapper">
+      <DIV ID="info">
+        <DIV ID="course">
             <P> Universidade Federal de Pernambuco (UFPE) <P>
             <P>Processamento Gráfico</P>
             <P>Prof. Sílvio Melo</P>
         </DIV>
-    </DIV>
-    <DIV ID="stage">
+        <DIV ID="project">
+          <P> Visualicação Interativa P2-1 </P>
+        </DIV>
+        <DIV ID="students">
+            <P> Rodrigo Cunha da Silva (rcs8) </P>
+            <P> Luiz Henrique Souza Gomes de Oliveira (lhsgo) </P>
+        </DIV>
+        <DIV CLASS="logo-ufpe">
+          <IMG SRC="ufpe-logo.jpg" id="ufpe-logo">
+        </DIV>
+      </DIV>
+      <DIV ID="stage">
       <DIV ID="inner-stage">
         <SCRIPT>
           var b = document.getElementById("inner-stage"),
               x = b.offsetWidth,
-              y = b.offsetHeight - 150;
+              y = b.offsetHeight - 10;
           var options = {
             url: 'stage.js',
-            width:  x,
-            height: y 
+            width: x,
+            height: y
           }
           bonsai.run(document.getElementById('inner-stage'), options);
         </SCRIPT>
       </DIV>
     </DIV>
-    <DIV ID="footer"> </DIV>
+    </DIV>
   </BODY>
 </HTML>
