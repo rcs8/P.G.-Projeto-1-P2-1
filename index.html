@@ -20,72 +20,59 @@
             <P> Rodrigo Cunha da Silva (rcs8) </P>
             <P> Luiz Henrique Souza Gomes de Oliveira (lhsgo) </P>
         </DIV>
-        <DIV ID="options">
-          <DIV ID="N">
-            <DIV ID="eval">
-              <INPUT ID="evaluation" type="number" name="evalution" min="0" value="1000"/>
-              <button ID="eval-button" onclick="sendEvaluations()">Avaliações</button>
-            </DIV>
-            <DIV ID="control">
-              <INPUT ID="poligonal" type="checkbox" name="" checked onclick="togglePoligonal()"/>
-              <LABEL> Poligonal de Controle </LABEL>
-            </DIV>
-          </DIV>
-          <DIV ID="S">
-            <DIV ID="dots">
-              <INPUT ID="pontos" type="checkbox" name="" checked onclick="toggleControlDots()"/>
-              <LABEL> Pontos de Controle </LABEL>
-            </DIV>
-            <DIV ID="curve">
-              <INPUT ID="curva" type="checkbox" name="" checked onclick="toggleCurve()"/>
-              <LABEL> Curva </LABEL>
-            </DIV>
-          </DIV>
-        </DIV>
         <DIV CLASS="logo-ufpe">
           <IMG SRC="ufpe-logo.jpg" ID="ufpe-logo">
         </DIV>
       </DIV>
       <DIV ID="stage">
       <DIV ID="inner-stage">
-        <SCRIPT>
-          var b = document.getElementById("inner-stage"),
-              x = b.offsetWidth,
-              y = b.offsetHeight - 10;
-          var options = {
-            url: 'stage.js',
-            width: x,
-            height: y
-          }
-          var program = bonsai.run(document.getElementById('inner-stage'), options);
-          
-          function sendEvaluations() {
-            var t = document.getElementById('evaluation').value
-            program.sendMessage('receiveEvaluation', {
-              data: t
-            })
-          }
-          function togglePoligonal() {
-          	var poligonalT = document.getElementById('poligonal').checked
-          	program.sendMessage('receivePoligonalBox', {
-            	data: poligonalT
-          	});
-          }
-    
-          function toggleCurve() {
-            var curveT = document.getElementById('curva').checked
-            program.sendMessage('receiveCurvaBox', {
-              data: curveT
-            });
-          }
-          function toggleControlDots() {
-            var pointT = document.getElementById('pontos').checked
-            program.sendMessage('receivePontosBox', {
-            	data: pointT
-            });
-          }
-        </SCRIPT>
+        <input id="evaluations" type="number" name="evalution" min="0" value="1000"/>
+      	<button onclick="sendEvaluations()">Avaliações</button>
+      	<input id="control" type="checkbox" name="" checked onclick=" togglePoligonal"/>
+        <label> Poligonal de controle </label>
+        <input id="dots" type="checkbox" name="" checked onclick="toggleControlDots()"/>
+        <label> Pontos de controle </label>
+        <input id="curve" type="checkbox" name="" checked onclick="toggleCurve"/>
+        <label> Curva </label>
       </DIV>
+      <SCRIPT>
+            var b = document.getElementById("inner-stage"),
+                x = b.offsetWidth,
+                y = b.offsetHeight - 10;
+            var options = {
+              url: 'bs.js',
+              width: x,
+              height: y
+            }
+            var program = bonsai.run(document.getElementById('inner-stage'), options);
+            
+            function sendEvaluations() {
+              var t = document.getElementById('evaluations').value
+              program.sendMessage('receiveEvaluation', {
+                data: t
+              })
+            }
+            function togglePoligonal() {
+            	var poligonalT = document.getElementById('control').checked
+            	program.sendMessage('receivePoligonalBox', {
+              	data: poligonalT
+            	});
+            }
+            
+            function toggleControlDots() {
+              var pointT = document.getElementById('dots').checked
+              program.sendMessage('receivePontosBox', {
+              	data: pointT
+              });
+            }
+            
+            function toggleCurve() {
+              var curveT = document.getElementById('curva').checked
+              program.sendMessage('receiveCurvaBox', {
+                data: curveT
+              });
+            }
+        </SCRIPT>  
     </DIV>
     </DIV>
   </BODY>

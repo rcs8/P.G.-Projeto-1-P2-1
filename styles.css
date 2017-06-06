@@ -64,53 +64,6 @@
   height: 70 px;
 }
 
-#options {
-  order: 5;
-  flex: 1;
-  border: 5px solid black;
-  display: flex;
-  flex-flow: column nowrap;
-}
-
-#N{
-  order: 1;
-  flex: 1;
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: flex-end;
-  font-style: italic;
-  font-weight: bold;
-}
-
-#eval{
-  order: 1;
-  flex: 1;
-}
-
-#control{
-  order: 2;
-  flex: 1; 
-}
-
-#S{
-  order: 2;
-  flex: 1;
-  display: flex;
-  flex-flow: row nowrap;
-  font-style: italic;
-  font-weight: bold;
-}
-
-#dots{
-  order: 1;
-  flex: 1;
-}
-
-#curve{
- order: 2;
- flex: 1; 
-}
-
 #stage {
   order: 2;
   flex: 1;
