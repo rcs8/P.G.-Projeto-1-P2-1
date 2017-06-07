@@ -26,14 +26,16 @@
       </DIV>
       <DIV ID="stage">
       <DIV ID="inner-stage">
-        <input id="evaluations" type="number" name="evalution" min="0" value="1000"/>
+        <input id="evaluations" type="number" name="evalution" min="0" value="500"  style="width:50px;"/>
       	<button onclick="sendEvaluations()">Avaliações</button>
-      	<input id="control" type="checkbox" name="" checked onclick=" togglePoligonal"/>
-        <label> Poligonal de controle </label>
+      	<input id="control" type="checkbox" name="" checked onclick=" togglePoligonal()"/>
+        <label> Poligono </label>
         <input id="dots" type="checkbox" name="" checked onclick="toggleControlDots()"/>
-        <label> Pontos de controle </label>
-        <input id="curve" type="checkbox" name="" checked onclick="toggleCurve"/>
+        <label> Pontos </label>
+        <input id="curve" type="checkbox" name="" checked onclick="toggleCurve()"/>
         <label> Curva </label>
+        <input id="range" type="range" name="range" min = "0" max = "100">
+   	    <button onclick="sendRange()"> t </button>
       </DIV>
       <SCRIPT>
             var b = document.getElementById("inner-stage"),
@@ -67,11 +69,18 @@
             }
             
             function toggleCurve() {
-              var curveT = document.getElementById('curva').checked
+              var curveT = document.getElementById('curve').checked
               program.sendMessage('receiveCurvaBox', {
                 data: curveT
               });
             }
+            
+            function sendRange() {
+        	    var range = document.getElementById('range').value
+        	    program.sendMessage('receiveRange', {
+          	  data: range
+            })
+      	    }
         </SCRIPT>  
     </DIV>
     </DIV>
