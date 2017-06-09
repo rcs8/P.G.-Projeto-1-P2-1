@@ -18,7 +18,6 @@ var controlPointsDer = []; // pontos de controle da curva estendida
 var curveDer;
 var curveDer2;
 var vetorDev;
-var vetorDev2;
 
 var dots = []; // pontos da curva
 var dotsDer = []; // pontos da curva 
@@ -62,10 +61,8 @@ stage.on('message:receiveRange', function(rangeEvent) {
 	t = t * (bezierDer.length/2);
 	t = parseInt(t);
 	vetorDev = new Path([bezierDer[2*t],bezierDer[2*t+1],bezierDer[2*t]+curveDer[2*t],bezierDer[2*t+1]+curveDer[2*t+1]]);
-	vetorDev.moveTo(0,0).stroke('red', CURVE_STROKE
-	);
+	vetorDev.moveTo(0,0).stroke('red', CURVE_STROKE);
 	pathDer.push(vetorDev);
-	vetorDev2 = new Path([bezierDer[2*t],bezierDer[2*t+1],bezierDer[2*t]+curveDer2[2*t],bezierDer[2*t+1]+curveDer2[2*t+1]]);
 	generateMap();
 })
 
@@ -76,10 +73,10 @@ stage.on('click', function(clickEvent) {
     var y1 = Math.min(clickEvent.y, sy);
 	for(var i = 0; i < dots.length; i++) {
 		if(clickEvent.target == dots[i]) {
-			dots[i].x = x1;
-			dots[i].y = y1;
-			dotsDer[i].x = x1 + sx;
-			dotsDer[i].y = y1;
+			controlPoints[i].x = x1;
+			controlPoints[i].y = y1;
+			controlPointsDer[i].x = x1 + sx;
+			controlPointsDer[i].y = y1;
 			exist = true
 		}
 	}
@@ -88,8 +85,10 @@ stage.on('click', function(clickEvent) {
 		dotsDer.push(new Circle(x1 + sx, y1, DOT_RADIUS).attr('fillColor', DOT_COLOR));
 		dots.push(new Circle(x1, y1, DOT_RADIUS).attr('fillColor', DOT_COLOR).on('drag', function(dragEvent){
       		this.attr({"x": Math.min(dragEvent.x, sx) ,"y": Math.min(dragEvent.y, sy)})
-      		x1 = this.attr("x");
-      		y1 = this.attr("y");
+      		for(var j = 0; j < dots.length; j++){
+      			dotsDer[i].attr('x', dots[i].attr('x') + sx); 
+      			dotsDer[i].attr('y', dots[i].attr('y')); 
+      		}
     	}));
 		controlPoints.push(new Point(x1, y1))
 		controlPointsDer.push(new Point(x1 + sx, y1))
@@ -143,39 +142,29 @@ function drawCasteljau(){
 	curveDer = [];
 	curveDer2 = [];
   	if(controlPoints.length > 2){
-  		for (var t = 0; t <= 1; t += 1 / evaluations) {
+  		for (var j = 0; j <= 1; j += 1 / evaluations) {
     		var aux = [];
     		var aux2 = [];
-    		var auxDerivative = [];
     		aux = controlPoints; 
     		aux2 = controlPointsDer;
     		while (aux.length > 1) {
       			var aux3 = [];
       			var aux4 = [];
-      			var aux2derivate = [];
       			if(aux.length == 2)  {
                     var vetor = new Point((controlPointsDer.length - 1)*(aux2[1].x - aux2[0].x),(controlPointsDer.length - 1) * (aux2[1].y - aux2[0].y));
-                }
+                } 
       			for (var i = 0; i < aux.length - 1; i++) {
-        			var ponto = new Point((t * aux[i].x + (1 - t)*aux[i + 1].x), (t * aux[i].y + (1 - t)*aux[i + 1].y)) //interpolacao
-        			var ponto2 = new Point((t * aux2[i].x + (1 - t)*aux2[i + 1].x), (t * aux2[i].y + (1 - t)*aux2[i + 1].y))
+        			var ponto = new Point((j * aux[i].x + (1 - j)*aux[i + 1].x), (j * aux[i].y + (1 - j)*aux[i + 1].y)) //interpolacao
+        			var ponto2 = new Point((j * aux2[i].x + (1 - j)*aux2[i + 1].x), (j * aux2[i].y + (1 - j)*aux2[i + 1].y))
         			aux3.push(ponto)
         			aux4.push(ponto2)
-        			if (i >= aux2derivate.length) continue;
-                    ponto = new Point((t * aux2derivate[i].x + (1 - t)*aux2derivate[i + 1].x), (t * aux2derivate[i].y + (1 - t)*aux2derivate[i + 1].y));
-        			aux2derivate.push(ponto);
       			}
       		
       			aux = aux3;
       			aux2 = aux4;
-      			auxDerivative = aux2derivate
     		}
 	    	curveDer.push(vetor.x);
 	    	curveDer.push(vetor.y);
-	    	if(auxDerivative.length > 0){
-	    		curveDer2.push(auxDerivative[0].x);
-	    		curveDer2.push(auxDerivative[0].y);
-	    	}
 	    	bezierCurve.push(aux[0].x);
 	    	bezierCurve.push(aux[0].y);
 	    	bezierDer.push(aux2[0].x);
@@ -188,7 +177,10 @@ function drawCasteljau(){
  	pathCurve.push(curva2)
   }
 
-
+function derivata(pointD){
+	
+	
+}	
 
 function generateMap() {
 	var stageObjects = []
