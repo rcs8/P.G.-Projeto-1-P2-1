@@ -14,7 +14,7 @@
             <P>Prof. Sílvio Melo</P>
         </DIV>
         <DIV ID="project">
-          <P> Visualicação Interativa P2-1 </P>
+          <P> Derivadas de Graus até 3 P2-1 </P>
         </DIV>
         <DIV ID="students">
             <P> Rodrigo Cunha da Silva (rcs8) </P>
@@ -26,7 +26,7 @@
       </DIV>
       <DIV ID="stage">
       <DIV ID="inner-stage">
-        <input id="evaluations" type="number" name="evalution" min="0" value="500"  style="width:50px;"/>
+        <input id="evaluations" type="number" name="evalution" min="0" value="100"  style="width:50px;"/>
       	<button onclick="sendEvaluations()">Avaliações</button>
       	<input id="control" type="checkbox" name="" checked onclick=" togglePoligonal()"/>
         <label> Poligono </label>
@@ -34,8 +34,6 @@
         <label> Pontos </label>
         <input id="curve" type="checkbox" name="" checked onclick="toggleCurve()"/>
         <label> Curva </label>
-        <input id="range" type="range" name="range" min = "0" max = "100">
-   	    <button onclick="sendRange()"> t </button>
       </DIV>
       <SCRIPT>
             var b = document.getElementById("inner-stage"),
@@ -74,13 +72,6 @@
                 data: curveT
               });
             }
-            
-            function sendRange() {
-        	    var range = document.getElementById('range').value
-        	    program.sendMessage('receiveRange', {
-          	  data: range
-            })
-      	    }
         </SCRIPT>  
     </DIV>
     </DIV>
